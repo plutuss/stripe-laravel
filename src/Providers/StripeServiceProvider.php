@@ -13,18 +13,19 @@ class StripeServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $stripe = new \Stripe\StripeClient(
-            config('stripe-plutuss.stripe-secret')
-        );
+        if (!$this->app->runningInConsole()) {
+            $stripe = new \Stripe\StripeClient(
+                config('stripe-plutuss.stripe-secret')
+            );
 
-        $this->app->singleton(StripeContract::class, function ($app) use ($stripe) {
-            return new StripeService($stripe);
-        });
+            $this->app->singleton(StripeContract::class, function ($app) use ($stripe) {
+                return new StripeService($stripe);
+            });
 
-        $this->app->singleton(StripeService::class, function ($app) use ($stripe) {
-            return new StripeService($stripe);
-        });
-
+            $this->app->singleton(StripeService::class, function ($app) use ($stripe) {
+                return new StripeService($stripe);
+            });
+        }
     }
 
     /**
@@ -32,10 +33,10 @@ class StripeServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         $this->publishes([
-            __DIR__.'/../config/stripe-plutuss.php' => config_path('stripe-plutuss.php'),
+            __DIR__ . '/../config/stripe-plutuss.php' => config_path('stripe-plutuss.php'),
         ]);
     }
 }
