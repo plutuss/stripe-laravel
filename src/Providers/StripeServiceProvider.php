@@ -37,6 +37,9 @@ class StripeServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/../config/stripe-plutuss.php' => config_path('stripe-plutuss.php'),
+            __DIR__ . '/../Models/PaymentMethod.php' => app_path('Models/PaymentMethod.php'),
+            __DIR__ . '/../Models/Plan.php' => app_path('Models/Plan.php'),
+            __DIR__ . '/../Models/Subscription.php' => app_path('Models/Subscription.php'),
         ]);
     }
 }
