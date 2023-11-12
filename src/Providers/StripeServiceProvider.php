@@ -14,7 +14,7 @@ class StripeServiceProvider extends ServiceProvider
     public function register(): void
     {
         $stripe = new \Stripe\StripeClient(
-            config('stripe.stripe-secret')
+            config('stripe-plutuss.stripe-secret')
         );
 
         $this->app->singleton(StripeContract::class, function ($app) use ($stripe) {
@@ -35,7 +35,7 @@ class StripeServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->publishes([
-            __DIR__.'/../config/stripe.php' => config_path('stripe.php'),
+            __DIR__.'/../config/stripe.php' => config_path('stripe-plutuss.php'),
         ]);
     }
 }
