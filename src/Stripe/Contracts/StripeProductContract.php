@@ -5,7 +5,6 @@ namespace Plutuss\Stripe\Contracts;
 interface StripeProductContract
 {
 
-
     public function createProduct($plan);
 
     public function deleteProduct($plan);

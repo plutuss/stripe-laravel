@@ -21,10 +21,6 @@ class StripeServiceProvider extends ServiceProvider
             $this->app->singleton(StripeContract::class, function ($app) use ($stripe) {
                 return new StripeService($stripe);
             });
-
-            $this->app->singleton(StripeService::class, function ($app) use ($stripe) {
-                return new StripeService($stripe);
-            });
         }
     }
 

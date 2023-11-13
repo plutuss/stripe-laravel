@@ -2,12 +2,9 @@
 
 namespace Plutuss\Stripe\Confirm;
 
-
-
-use Plutuss\Stripe\Contracts\StripeResponseContract;
 use Plutuss\Stripe\Traits\HasPropertyTrait;
 
-class Confirm implements StripeResponseContract, ConfirmInterface
+class Confirm implements ConfirmInterface
 {
     use HasPropertyTrait;
 

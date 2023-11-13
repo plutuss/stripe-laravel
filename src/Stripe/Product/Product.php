@@ -2,12 +2,9 @@
 
 namespace Plutuss\Stripe\Product;
 
-
-
-use Plutuss\Stripe\Contracts\StripeResponseContract;
 use Plutuss\Stripe\Traits\HasPropertyTrait;
 
-class Product implements StripeResponseContract, ProductInterface
+class Product implements ProductInterface
 {
 
     use HasPropertyTrait;

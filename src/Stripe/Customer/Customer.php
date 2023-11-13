@@ -3,11 +3,9 @@
 namespace Plutuss\Stripe\Customer;
 
 
-
-use Plutuss\Stripe\Contracts\StripeResponseContract;
 use Plutuss\Stripe\Traits\HasPropertyTrait;
 
-class Customer implements StripeResponseContract, CustomerInterface
+class Customer implements CustomerInterface
 {
     use HasPropertyTrait;
 

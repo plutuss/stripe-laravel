@@ -2,12 +2,9 @@
 
 namespace Plutuss\Stripe\Price;
 
-
-
-use Plutuss\Stripe\Contracts\StripeResponseContract;
 use Plutuss\Stripe\Traits\HasPropertyTrait;
 
-class Price implements StripeResponseContract, PriceInterface
+class Price implements PriceInterface
 {
     use HasPropertyTrait;
 

@@ -3,12 +3,10 @@
 namespace Plutuss\Stripe\Billing;
 
 
-
 use Plutuss\Stripe\Contracts\StripePaymentResponseContract;
-use Plutuss\Stripe\Contracts\StripeResponseContract;
 use Plutuss\Stripe\Traits\HasPropertyTrait;
 
-class PaymentIntent implements StripeResponseContract, StripePaymentResponseContract, PaymentIntentInterface
+class PaymentIntent implements StripePaymentResponseContract, PaymentIntentInterface
 {
     use HasPropertyTrait;
 
