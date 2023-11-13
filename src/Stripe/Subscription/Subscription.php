@@ -2,10 +2,9 @@
 
 namespace Plutuss\Stripe\Subscription;
 
-use Plutuss\Stripe\Contracts\StripeResponseContract;
 use Plutuss\Stripe\Traits\HasPropertyTrait;
 
-class Subscription implements StripeResponseContract
+class Subscription implements SubscriptionInterface
 {
     use HasPropertyTrait;
 

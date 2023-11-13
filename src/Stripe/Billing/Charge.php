@@ -2,11 +2,9 @@
 
 namespace Plutuss\Stripe\Billing;
 
-
-use Plutuss\Stripe\Contracts\StripeResponseContract;
 use Plutuss\Stripe\Traits\HasPropertyTrait;
 
-class Charge implements StripeResponseContract, ChargeInterface
+class Charge implements ChargeInterface
 {
     use HasPropertyTrait;
 
