@@ -40,9 +40,6 @@ class StripeController extends Controller
 
 ```
 
-
-
-
 Use or StripeContract:
 
 ```php
