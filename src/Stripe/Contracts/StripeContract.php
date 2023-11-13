@@ -3,6 +3,7 @@
 namespace Plutuss\Stripe\Contracts;
 
 
+use Plutuss\Stripe\Billing\PaymentIntentInterface;
 use Plutuss\Stripe\Confirm\StripeConfirmService;
 use Plutuss\Stripe\Customer\StripeCustomerService;
 use Plutuss\Stripe\PaymentMethod\PaymentMethodInterface;
@@ -15,14 +16,14 @@ interface StripeContract
     /**
      * @param int $amount
      * @param string $token
-     * @return mixed
+     * @return PaymentIntentInterface
      */
-    public function paymentIntent(int $amount, string $token);
+    public function paymentIntent(int $amount, string $token): PaymentIntentInterface;
 
     /**
-     * @return mixed
+     * @return PaymentMethodInterface
      */
-    public function generateValidatePaymentToken(): mixed;
+    public function generateValidatePaymentToken(): PaymentMethodInterface;
 
 
     /**

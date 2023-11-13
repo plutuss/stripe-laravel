@@ -27,10 +27,10 @@ class StripeService implements StripeContract
     /**
      * @param int $amount
      * @param string $token
-     * @return PaymentIntent
+     * @return Billing\PaymentIntentInterface
      * @throws ApiErrorException
      */
-    public function paymentIntent(int $amount, string $token): PaymentIntent
+    public function paymentIntent(int $amount, string $token): Billing\PaymentIntentInterface
     {
 
         $response = $this->client
