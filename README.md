@@ -34,7 +34,7 @@ class StripeController extends Controller
 {
     public function index()
     {
-        $payment_cart = Stripe::generateValidatePaymentToken();
+        $payment_cart = Stripe::faker()->generateValidatePaymentToken();
     }
 }
 
@@ -51,7 +51,7 @@ class StripeController extends Controller
 {
     public function index(StripeContract $stripeContract)
     {
-        $payment_cart = $stripeContract->generateValidatePaymentToken();
+        $payment_cart = $stripeContract->faker()->generateValidatePaymentToken();
     }
 }
 
@@ -95,7 +95,7 @@ class StripeController extends Controller
 {
     public function index(StripeContract $stripeContract)
     {
-        $payment_cart = $stripeContract->generateValidatePaymentToken();
+        $payment_cart = $stripeContract->faker()->generateValidatePaymentToken();
         $payment_cart->card;
         $payment_cart->type;
         $payment_cart->created;

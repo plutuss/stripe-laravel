@@ -6,7 +6,11 @@ namespace Plutuss\Stripe;
 use Plutuss\Stripe\Billing\PaymentIntent;
 use Plutuss\Stripe\Confirm\StripeConfirmService;
 use Plutuss\Stripe\Contracts\StripeContract;
+use Plutuss\Stripe\Contracts\StripeCustomerContract;
+use Plutuss\Stripe\Contracts\StripeSubscriptionContract;
 use Plutuss\Stripe\Customer\StripeCustomerService;
+use Plutuss\Stripe\Faker\Faker;
+use Plutuss\Stripe\Faker\FakerInterface;
 use Plutuss\Stripe\PaymentMethod\PaymentMethod;
 use Plutuss\Stripe\PaymentMethod\PaymentMethodInterface;
 use Plutuss\Stripe\Price\StripePriceService;
@@ -43,6 +47,7 @@ class StripeService implements StripeContract
                     'enabled' => true,
                 ],
             ]);
+
         return new PaymentIntent([
             'id' => $response->id,
             'amount' => $response->amount,
@@ -50,35 +55,15 @@ class StripeService implements StripeContract
         ]);
     }
 
-    /**
-     * @return PaymentMethodInterface
-     * @throws ApiErrorException
-     */
-    public function generateValidatePaymentToken(): PaymentMethodInterface
+    public function faker(): FakerInterface
     {
-        $payment_method = $this->client
-            ->paymentMethods
-            ->create([
-                'type' => 'card',
-                'card' => [
-                    'number' => '4242424242424242',
-                    'exp_month' => 7,
-                    'exp_year' => now()->addYear()->format('Y'),
-                    'cvc' => '314',
-                ],
-            ]);
-
-
-        return new PaymentMethod([
-            'id' => $payment_method->id,
-            'data' => $payment_method
-        ]);
+        return new Faker($this->client);
     }
 
     /**
-     * @return StripeSubscriptionService
+     * @return StripeSubscriptionContract
      */
-    public function subscriptions(): StripeSubscriptionService
+    public function subscriptions(): StripeSubscriptionContract
     {
         return new StripeSubscriptionService($this->client);
     }
@@ -111,9 +96,9 @@ class StripeService implements StripeContract
 
 
     /**
-     * @return StripeCustomerService
+     * @return StripeCustomerContract
      */
-    public function customer(): StripeCustomerService
+    public function customer(): StripeCustomerContract
     {
         return new StripeCustomerService($this->client);
     }

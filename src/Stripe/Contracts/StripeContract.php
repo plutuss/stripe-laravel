@@ -4,12 +4,8 @@ namespace Plutuss\Stripe\Contracts;
 
 
 use Plutuss\Stripe\Billing\PaymentIntentInterface;
-use Plutuss\Stripe\Confirm\StripeConfirmService;
-use Plutuss\Stripe\Customer\StripeCustomerService;
+use Plutuss\Stripe\Faker\FakerInterface;
 use Plutuss\Stripe\PaymentMethod\PaymentMethodInterface;
-use Plutuss\Stripe\Price\StripePriceService;
-use Plutuss\Stripe\Product\StripeProductService;
-use Plutuss\Stripe\Subscription\StripeSubscriptionService;
 
 interface StripeContract
 {
@@ -21,40 +17,39 @@ interface StripeContract
     public function paymentIntent(int $amount, string $token): PaymentIntentInterface;
 
     /**
-     * @return PaymentMethodInterface
+     * @return StripeSubscriptionContract
      */
-    public function generateValidatePaymentToken(): PaymentMethodInterface;
-
-
-    /**
-     * @return StripeSubscriptionService
-     */
-    public function subscriptions(): StripeSubscriptionService;
+    public function subscriptions(): StripeSubscriptionContract;
 
     /**
-     * @return StripeConfirmService
+     * @return StripeConfirmContract
      */
-    public function confirm(): StripeConfirmService;
+    public function confirm(): StripeConfirmContract;
 
     /**
-     * @return StripeProductService
+     * @return StripeProductContract
      */
-    public function product(): StripeProductService;
+    public function product(): StripeProductContract;
 
     /**
-     * @return StripePriceService
+     * @return StripePriceContract
      */
-    public function price(): StripePriceService;
+    public function price(): StripePriceContract;
 
     /**
-     * @return StripeCustomerService
+     * @return StripeCustomerContract
      */
-    public function customer(): StripeCustomerService;
+    public function customer(): StripeCustomerContract;
 
     /**
      * @param $payment_method
      * @return PaymentMethodInterface
      */
     public function paymentMethod($payment_method): PaymentMethodInterface;
+
+    /**
+     * @return FakerInterface
+     */
+    public function faker(): FakerInterface;
 }
 
