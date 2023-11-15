@@ -8,7 +8,7 @@ namespace Plutuss\Facades;
 use Illuminate\Support\Facades\Facade;
 use Plutuss\Stripe\Billing\PaymentIntent;
 use Plutuss\Stripe\Confirm\StripeConfirmService;
-use Plutuss\Stripe\Customer\StripeCustomerService;
+use Plutuss\Stripe\Contracts\StripeCustomerContract;
 use Plutuss\Stripe\Faker\FakerInterface;
 use Plutuss\Stripe\PaymentMethod\PaymentMethodInterface;
 use Plutuss\Stripe\Price\StripePriceService;
@@ -22,7 +22,7 @@ use Plutuss\Stripe\Subscription\StripeSubscriptionService;
  * @method static StripeConfirmService  confirm()
  * @method static StripeProductService product()
  * @method static StripePriceService price()
- * @method static StripeCustomerService customer()
+ * @method static StripeCustomerContract customer()
  * @method static PaymentMethodInterface paymentMethod($payment_method)
  *
  *

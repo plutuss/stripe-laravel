@@ -55,6 +55,9 @@ class StripeService implements StripeContract
         ]);
     }
 
+    /**
+     * @return FakerInterface
+     */
     public function faker(): FakerInterface
     {
         return new Faker($this->client);
