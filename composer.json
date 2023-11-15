@@ -1,6 +1,6 @@
 {
   "name": "plutuss/stripe-laravel",
-  "description": "description",
+  "description": "Laravel 10 integration for the Stripe package.",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
