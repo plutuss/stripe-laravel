@@ -4,7 +4,9 @@ namespace Plutuss\Stripe;
 
 
 use Plutuss\Stripe\Billing\PaymentIntent;
+use Plutuss\Stripe\Billing\PaymentIntentService;
 use Plutuss\Stripe\Confirm\StripeConfirmService;
+use Plutuss\Stripe\Contracts\PaymentIntentContract;
 use Plutuss\Stripe\Contracts\StripeContract;
 use Plutuss\Stripe\Contracts\StripeCustomerContract;
 use Plutuss\Stripe\Contracts\StripeSubscriptionContract;
@@ -27,32 +29,10 @@ class StripeService implements StripeContract
     {
     }
 
-
-    /**
-     * @param int $amount
-     * @param string $token
-     * @return Billing\PaymentIntentInterface
-     * @throws ApiErrorException
-     */
-    public function paymentIntent(int $amount, string $token): Billing\PaymentIntentInterface
+    public function paymentIntent(): PaymentIntentContract
     {
 
-        $response = $this->client
-            ->paymentIntents
-            ->create([
-                'amount' => $amount,
-                'currency' => 'usd',
-                'payment_method' => $token,
-                'automatic_payment_methods' => [
-                    'enabled' => true,
-                ],
-            ]);
-
-        return new PaymentIntent([
-            'id' => $response->id,
-            'amount' => $response->amount,
-            'data' => $response
-        ]);
+        return new PaymentIntentService($this->client);
     }
 
     /**
