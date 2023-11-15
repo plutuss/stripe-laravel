@@ -9,4 +9,6 @@ interface FakerInterface
 
     public function generateValidatePaymentToken(): PaymentMethodInterface;
 
+    public function setOptionalParameters(array $params): static;
+
 }

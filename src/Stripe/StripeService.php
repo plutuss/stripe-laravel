@@ -2,13 +2,14 @@
 
 namespace Plutuss\Stripe;
 
-
-use Plutuss\Stripe\Billing\PaymentIntent;
 use Plutuss\Stripe\Billing\PaymentIntentService;
 use Plutuss\Stripe\Confirm\StripeConfirmService;
 use Plutuss\Stripe\Contracts\PaymentIntentContract;
+use Plutuss\Stripe\Contracts\StripeConfirmContract;
 use Plutuss\Stripe\Contracts\StripeContract;
 use Plutuss\Stripe\Contracts\StripeCustomerContract;
+use Plutuss\Stripe\Contracts\StripePriceContract;
+use Plutuss\Stripe\Contracts\StripeProductContract;
 use Plutuss\Stripe\Contracts\StripeSubscriptionContract;
 use Plutuss\Stripe\Customer\StripeCustomerService;
 use Plutuss\Stripe\Faker\Faker;
@@ -31,7 +32,6 @@ class StripeService implements StripeContract
 
     public function paymentIntent(): PaymentIntentContract
     {
-
         return new PaymentIntentService($this->client);
     }
 
@@ -52,17 +52,17 @@ class StripeService implements StripeContract
     }
 
     /**
-     * @return StripeConfirmService
+     * @return StripeConfirmContract
      */
-    public function confirm(): StripeConfirmService
+    public function confirm(): StripeConfirmContract
     {
         return new StripeConfirmService($this->client);
     }
 
     /**
-     * @return StripeProductService
+     * @return StripeProductContract
      */
-    public function product(): StripeProductService
+    public function product(): StripeProductContract
     {
         return new StripeProductService($this->client);
 
@@ -70,9 +70,9 @@ class StripeService implements StripeContract
 
 
     /**
-     * @return StripePriceService
+     * @return StripePriceContract
      */
-    public function price(): StripePriceService
+    public function price(): StripePriceContract
     {
         return new StripePriceService($this->client);
     }

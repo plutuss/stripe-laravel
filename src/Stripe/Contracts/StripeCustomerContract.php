@@ -8,4 +8,6 @@ interface StripeCustomerContract
 {
     public function createCustomer(): CustomerInterface;
 
+
+    public function setOptionalParameters(array $params): static;
 }

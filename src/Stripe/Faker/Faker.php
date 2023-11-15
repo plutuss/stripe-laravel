@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace Plutuss\Stripe\Faker;
 
+use Plutuss\Stripe\Traits\HasOptionAttributeTrait;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 use Plutuss\Stripe\PaymentMethod\PaymentMethod;
@@ -12,6 +13,7 @@ use Plutuss\Stripe\PaymentMethod\PaymentMethodInterface;
 
 class Faker implements FakerInterface
 {
+    use HasOptionAttributeTrait;
 
     private StripeClient $client;
 
@@ -24,19 +26,22 @@ class Faker implements FakerInterface
     /**
      * @return PaymentMethodInterface
      */
-    public function generateValidatePaymentToken(): PaymentMethodInterface
+    public function generateValidatePaymentToken(string $typeCard = 'card'): PaymentMethodInterface
     {
+
+        $params = array_merge([
+            'type' => $typeCard,
+            'card' => [
+                'number' => '4242424242424242',
+                'exp_month' => 7,
+                'exp_year' => now()->addYear()->format('Y'),
+                'cvc' => '314',
+            ],
+        ], $this->params);
+
         $payment_method = $this->client
             ->paymentMethods
-            ->create([
-                'type' => 'card',
-                'card' => [
-                    'number' => '4242424242424242',
-                    'exp_month' => 7,
-                    'exp_year' => now()->addYear()->format('Y'),
-                    'cvc' => '314',
-                ],
-            ]);
+            ->create($params);
 
 
         return new PaymentMethod([

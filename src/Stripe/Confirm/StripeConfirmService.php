@@ -3,12 +3,13 @@
 namespace Plutuss\Stripe\Confirm;
 
 
-
 use Plutuss\Stripe\Contracts\StripeConfirmContract;
+use Plutuss\Stripe\Traits\HasOptionAttributeTrait;
 use Stripe\StripeClient;
 
 class StripeConfirmService implements StripeConfirmContract
 {
+    use HasOptionAttributeTrait;
 
     private StripeClient $client;
 
@@ -19,9 +20,11 @@ class StripeConfirmService implements StripeConfirmContract
 
     public function createIntent(): ConfirmInterface
     {
-        $setupIntent = $this->client->setupIntents->create([
+        $params = array_merge([
             'payment_method_types' => ['card'],
-        ]);
+        ], $this->params);
+
+        $setupIntent = $this->client->setupIntents->create($params);
 
         return new Confirm([
             'id' => $setupIntent->id,
@@ -32,9 +35,11 @@ class StripeConfirmService implements StripeConfirmContract
 
     public function confirmIntent(string $intentId, $paymentMethod): ConfirmInterface
     {
+        $params = array_merge(['payment_method' => $paymentMethod], $this->params);
+
         $setupIntent = $this->client->setupIntents->confirm(
             $intentId,
-            ['payment_method' => $paymentMethod]
+            $params
         );
 
         return new Confirm([
@@ -45,20 +50,26 @@ class StripeConfirmService implements StripeConfirmContract
 
     public function attachMethodToCustomer($paymentMethod, $stripeCustomerId)
     {
+        $params = array_merge([
+            'customer' => $stripeCustomerId,
+        ], $this->params);
+
         $this->client->paymentMethods->attach(
             $paymentMethod,
-            [
-                'customer' => $stripeCustomerId,
-            ]
+            $params
         );
     }
 
 
     public function setCustomerDefaultMethod($paymentMethod, $stripeCustomerId)
     {
+        $params = array_merge([
+            'invoice_settings' => ['default_payment_method' => $paymentMethod]
+        ],
+            $this->params);
         $this->client->customers->update(
             $stripeCustomerId,
-            ['invoice_settings' => ['default_payment_method' => $paymentMethod]]
+            $params
         );
     }
 

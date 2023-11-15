@@ -11,4 +11,6 @@ interface StripePriceContract
 
     public function setRecurringInterval(string $interval = null): static;
 
+
+
 }

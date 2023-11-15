@@ -2,11 +2,13 @@
 
 namespace  Plutuss\Stripe\Billing;
 
+use Illuminate\Support\Collection;
+
 interface PaymentIntentInterface
 {
     public function getId(): string;
 
-    public function getData(): \Illuminate\Support\Collection;
+    public function getData(): Collection;
 
     public function getAmount(): ?int;
 }
