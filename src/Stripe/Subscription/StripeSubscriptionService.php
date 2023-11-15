@@ -6,6 +6,7 @@ use App\Models\User;
 use Plutuss\Stripe\Contracts\StripeSubscriptionContract;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
+use Illuminate\Support\Collection;
 
 class StripeSubscriptionService implements StripeSubscriptionContract
 {
@@ -99,7 +100,7 @@ class StripeSubscriptionService implements StripeSubscriptionContract
 
     private function subscriptionInfo($subscription, $price): Collection
     {
-        $status = $subscription->status == 'canceled' ? true : false;
+        $status = $subscription->status == 'canceled';
 
         $subscriptionInfo = collect([
             'id' => $subscription->id,

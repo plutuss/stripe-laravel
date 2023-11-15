@@ -3,7 +3,6 @@
 namespace Plutuss\Stripe\Price;
 
 
-
 use Plutuss\Stripe\Contracts\StripePriceContract;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
@@ -12,7 +11,13 @@ class StripePriceService implements StripePriceContract
 {
 
     private StripeClient $client;
+    /**
+     * @var string
+     */
     private string $interval = 'month';
+    /**
+     * @var array|string[]
+     */
     private array $intervalArray = ['day', 'week', 'month', 'year'];
 
     public function __construct($client)
@@ -81,7 +86,11 @@ class StripePriceService implements StripePriceContract
 
     }
 
-    public function setRecurringInterval(string $interval = null)
+    /**
+     * @param string|null $interval
+     * @return $this
+     */
+    public function setRecurringInterval(string $interval = null): static
     {
         if (!empty($interval && in_array($interval, $this->intervalArray))) {
             $this->interval = $interval;

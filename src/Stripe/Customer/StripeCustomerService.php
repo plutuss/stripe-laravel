@@ -4,15 +4,16 @@ namespace Plutuss\Stripe\Customer;
 
 use App\Models\User;
 
+use Plutuss\Stripe\Contracts\StripeCustomerContract;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
-class StripeCustomerService
+class StripeCustomerService implements StripeCustomerContract
 {
     protected ?User $user;
     private StripeClient $client;
 
-    public function __construct($client)
+    public function __construct(StripeClient $client)
     {
         $this->user = auth()->user();
         $this->client = $client;
