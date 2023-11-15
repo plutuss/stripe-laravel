@@ -9,12 +9,11 @@ use Plutuss\Stripe\PaymentMethod\PaymentMethodInterface;
 
 interface StripeContract
 {
+
     /**
-     * @param int $amount
-     * @param string $token
-     * @return PaymentIntentInterface
+     * @return PaymentIntentContract
      */
-    public function paymentIntent(int $amount, string $token): PaymentIntentInterface;
+    public function paymentIntent(): PaymentIntentContract;
 
     /**
      * @return StripeSubscriptionContract
