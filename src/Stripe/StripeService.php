@@ -32,7 +32,6 @@ class StripeService implements StripeContract
 
     public function paymentIntent(): PaymentIntentContract
     {
-
         return new PaymentIntentService($this->client);
     }
 
