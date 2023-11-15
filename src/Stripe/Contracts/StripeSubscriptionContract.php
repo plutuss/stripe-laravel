@@ -8,4 +8,6 @@ interface StripeSubscriptionContract
     public function checkSubscription(string $subscriptionId);
 
     public function canceledSubscription(string $subscriptionId);
+
+    public function setOptionalParameters(array $params): static;
 }

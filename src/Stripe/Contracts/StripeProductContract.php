@@ -10,4 +10,6 @@ interface StripeProductContract
     public function deleteProduct($plan);
 
     public function updateProduct($plan, $active = true);
+
+    public function setOptionalParameters(array $params): static;
 }

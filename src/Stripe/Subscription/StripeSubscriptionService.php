@@ -4,22 +4,25 @@ namespace Plutuss\Stripe\Subscription;
 
 use App\Models\User;
 use Plutuss\Stripe\Contracts\StripeSubscriptionContract;
+use Plutuss\Stripe\Traits\HasOptionAttributeTrait;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 use Illuminate\Support\Collection;
 
 class StripeSubscriptionService implements StripeSubscriptionContract
 {
+    use HasOptionAttributeTrait;
 
     protected ?User $user;
     private StripeClient $client;
+
 
     public function __construct($client)
     {
         $this->user = auth()->user();
         $this->client = $client;
-
     }
+
 
     /**
      * @param string $priceId
@@ -44,7 +47,9 @@ class StripeSubscriptionService implements StripeSubscriptionContract
             $subscriptionData['trial_end'] = $trial_end_at;
         }
 
-        $response = $this->client->subscriptions->create($subscriptionData);
+        $params = array_merge($subscriptionData, $this->params);
+
+        $response = $this->client->subscriptions->create($params);
 
         return new Subscription([
             'id' => $response->id,
@@ -83,7 +88,7 @@ class StripeSubscriptionService implements StripeSubscriptionContract
     {
         $response = $this->client->subscriptions->cancel(
             $subscriptionId,
-            []
+            $this->params
         );
 
         return new Subscription([
@@ -114,10 +119,11 @@ class StripeSubscriptionService implements StripeSubscriptionContract
         if ($subscription->status == 'active') {
             $subscriptionInfo->is_active = true;
         } else {
-
             $subscriptionInfo->is_active = (int)$subscriptionInfo->end_at > now();
         }
 
         return $subscriptionInfo;
     }
+
+
 }

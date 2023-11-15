@@ -13,4 +13,6 @@ interface StripeConfirmContract
     public function setCustomerDefaultMethod( string $paymentMethod, string $stripeCustomerId);
 
     public function getIntentFromSubscription( string $subscriptionId);
+
+    public function setOptionalParameters(array $params): static;
 }

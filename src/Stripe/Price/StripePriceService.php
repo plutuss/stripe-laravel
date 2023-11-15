@@ -4,11 +4,13 @@ namespace Plutuss\Stripe\Price;
 
 
 use Plutuss\Stripe\Contracts\StripePriceContract;
+use Plutuss\Stripe\Traits\HasOptionAttributeTrait;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
 class StripePriceService implements StripePriceContract
 {
+    use HasOptionAttributeTrait;
 
     private StripeClient $client;
     /**
@@ -29,16 +31,19 @@ class StripePriceService implements StripePriceContract
     {
         $price = $this->getPrice($plan, $price);
 
+        $params = array_merge([
+            'unit_amount' => $price,
+            'currency' => 'usd',
+            'recurring' => [
+                'interval' => $this->interval
+            ],
+            'product' => $plan->stripe_product,
+        ],
+            $this->params);
+
         $priceStripe = $this->client
             ->prices
-            ->create([
-                'unit_amount' => $price,
-                'currency' => 'usd',
-                'recurring' => [
-                    'interval' => $this->interval
-                ],
-                'product' => $plan->stripe_product,
-            ]);
+            ->create($params);
 
         return new  Price([
             'id' => $priceStripe->id,
@@ -55,13 +60,16 @@ class StripePriceService implements StripePriceContract
      */
     public function deactivatePrice($stripePriceId): PriceInterface
     {
+        $params = array_merge([
+            'active' => false,
+        ],
+            $this->params);
+
         $priceStripe = $this->client
             ->prices
             ->update(
                 $stripePriceId,
-                [
-                    'active' => false,
-                ]
+                $params
 
             );
 

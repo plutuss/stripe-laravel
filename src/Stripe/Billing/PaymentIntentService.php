@@ -2,13 +2,17 @@
 
 namespace Plutuss\Stripe\Billing;
 
-
 use Plutuss\Stripe\Contracts\PaymentIntentContract;
+use Plutuss\Stripe\Traits\HasOptionAttributeTrait;
+use Stripe\StripeClient;
 
 class PaymentIntentService implements PaymentIntentContract
 {
 
+    use HasOptionAttributeTrait;
+
     private StripeClient $client;
+
 
     public function __construct(StripeClient $client)
     {
@@ -20,22 +24,24 @@ class PaymentIntentService implements PaymentIntentContract
     /**
      * @param int $amount
      * @param string $token
-     * @return \Plutuss\Stripe\Billing\PaymentIntentInterface
+     * @return PaymentIntentInterface
      * @throws ApiErrorException
      */
-    public function createPayment(int $amount, string $token): \Plutuss\Stripe\Billing\PaymentIntentInterface
+    public function createPayment(int $amount, string $token, string $currency = 'usd'): PaymentIntentInterface
     {
+
+        $params = array_merge([
+            'amount' => $amount,
+            'currency' => $currency,
+            'payment_method' => $token,
+            'automatic_payment_methods' => [
+                'enabled' => true,
+            ],
+        ], $this->params);
 
         $response = $this->client
             ->paymentIntents
-            ->create([
-                'amount' => $amount,
-                'currency' => 'usd',
-                'payment_method' => $token,
-                'automatic_payment_methods' => [
-                    'enabled' => true,
-                ],
-            ]);
+            ->create($params);
 
         return new PaymentIntent([
             'id' => $response->id,

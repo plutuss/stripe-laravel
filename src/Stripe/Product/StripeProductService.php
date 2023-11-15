@@ -3,13 +3,15 @@
 namespace Plutuss\Stripe\Product;
 
 
-
 use Plutuss\Stripe\Contracts\StripeProductContract;
+use Plutuss\Stripe\Traits\HasOptionAttributeTrait;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
 class StripeProductService implements StripeProductContract
 {
+
+    use HasOptionAttributeTrait;
 
     private StripeClient $client;
 
@@ -25,11 +27,14 @@ class StripeProductService implements StripeProductContract
      */
     public function createProduct($plan): ProductInterface
     {
+
+        $params = array_merge([
+            'name' => $plan->title,
+        ],
+            $this->params);
         $product = $this->client
             ->products
-            ->create([
-                'name' => $plan->title,
-            ]);
+            ->create($params);
 
         return new Product([
             'id' => $product->id,
@@ -49,7 +54,7 @@ class StripeProductService implements StripeProductContract
                 ->products
                 ->delete(
                     $plan->stripe_product,
-                    []
+                    $this->params
                 );
         } catch (\Stripe\Exception\InvalidRequestException $exception) {
             return $exception->getMessage();
@@ -65,14 +70,17 @@ class StripeProductService implements StripeProductContract
     public function updateProduct($plan, $active = true): ProductInterface
     {
 
+        $params = array_merge([
+            'name' => $plan->title,
+            'active' => $active,
+        ],
+            $this->params);
+
         $product = $this->client
             ->products
             ->update(
                 $plan->stripe_product,
-                [
-                    'name' => $plan->title,
-                    'active' => $active,
-                ]
+                $params
             );
 
         return new Product([
