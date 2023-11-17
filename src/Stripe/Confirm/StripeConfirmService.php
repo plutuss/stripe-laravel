@@ -9,6 +9,7 @@ use Stripe\StripeClient;
 
 class StripeConfirmService implements StripeConfirmContract
 {
+
     use HasOptionAttributeTrait;
 
     private StripeClient $client;

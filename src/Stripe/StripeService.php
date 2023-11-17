@@ -3,6 +3,8 @@
 namespace Plutuss\Stripe;
 
 use Plutuss\Stripe\Billing\PaymentIntentService;
+use Plutuss\Stripe\Charge\StripeChargeService;
+use Plutuss\Stripe\Charge\StripeChargeServiceInterface;
 use Plutuss\Stripe\Confirm\StripeConfirmService;
 use Plutuss\Stripe\Contracts\PaymentIntentContract;
 use Plutuss\Stripe\Contracts\StripeConfirmContract;
@@ -19,7 +21,6 @@ use Plutuss\Stripe\PaymentMethod\PaymentMethodInterface;
 use Plutuss\Stripe\Price\StripePriceService;
 use Plutuss\Stripe\Product\StripeProductService;
 use Plutuss\Stripe\Subscription\StripeSubscriptionService;
-use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
 class StripeService implements StripeContract
@@ -84,6 +85,14 @@ class StripeService implements StripeContract
     public function customer(): StripeCustomerContract
     {
         return new StripeCustomerService($this->client);
+    }
+
+    /**
+     * @return StripeChargeServiceInterface
+     */
+    public function charge(): StripeChargeServiceInterface
+    {
+        return new StripeChargeService($this->client);
     }
 
 

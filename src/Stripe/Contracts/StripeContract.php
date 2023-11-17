@@ -4,6 +4,7 @@ namespace Plutuss\Stripe\Contracts;
 
 
 use Plutuss\Stripe\Billing\PaymentIntentInterface;
+use Plutuss\Stripe\Charge\StripeChargeServiceInterface;
 use Plutuss\Stripe\Faker\FakerInterface;
 use Plutuss\Stripe\PaymentMethod\PaymentMethodInterface;
 
@@ -50,5 +51,11 @@ interface StripeContract
      * @return FakerInterface
      */
     public function faker(): FakerInterface;
+
+
+    /**
+     * @return StripeChargeServiceInterface
+     */
+    public function charge(): StripeChargeServiceInterface;
 }
 
