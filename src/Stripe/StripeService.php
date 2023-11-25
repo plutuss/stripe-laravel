@@ -13,6 +13,7 @@ use Plutuss\Stripe\Contracts\StripeCustomerContract;
 use Plutuss\Stripe\Contracts\StripePriceContract;
 use Plutuss\Stripe\Contracts\StripeProductContract;
 use Plutuss\Stripe\Contracts\StripeSubscriptionContract;
+use Plutuss\Stripe\Contracts\StripeWebhookContract;
 use Plutuss\Stripe\Customer\StripeCustomerService;
 use Plutuss\Stripe\Faker\Faker;
 use Plutuss\Stripe\Faker\FakerInterface;
@@ -21,6 +22,7 @@ use Plutuss\Stripe\PaymentMethod\PaymentMethodInterface;
 use Plutuss\Stripe\Price\StripePriceService;
 use Plutuss\Stripe\Product\StripeProductService;
 use Plutuss\Stripe\Subscription\StripeSubscriptionService;
+use Plutuss\Stripe\Webhook\StripeWebhookService;
 use Stripe\StripeClient;
 
 class StripeService implements StripeContract
@@ -93,6 +95,11 @@ class StripeService implements StripeContract
     public function charge(): StripeChargeServiceInterface
     {
         return new StripeChargeService($this->client);
+    }
+
+    public function webhook(): StripeWebhookContract
+    {
+        return new StripeWebhookService($this->client);
     }
 
 
