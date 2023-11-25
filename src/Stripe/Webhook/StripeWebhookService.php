@@ -21,14 +21,14 @@ class StripeWebhookService implements StripeWebhookContract
 
     /**
      * @param string|null $url
-     * @param array $enabled_events
+     * @param array $paramsWebhook
      * @return WebhookInterface
      * @throws ApiErrorException
      */
-    public function createWebhook(string $url = null, array $enabled_events = []): WebhookInterface
+    public function createWebhook(string $url = null, array $paramsWebhook = []): WebhookInterface
     {
-        if (empty($enabled_events)) {
-            $enabled_events = [
+        if (empty($paramsWebhook)) {
+            $paramsWebhook = [
                 'enabled_events' => [
                     'charge.failed',
                     'charge.succeeded',
@@ -36,7 +36,7 @@ class StripeWebhookService implements StripeWebhookContract
             ];
         }
 
-        $params = array_merge($enabled_events, $this->params);
+        $params = array_merge($paramsWebhook, $this->params);
 
         $webhook = $this->client
             ->webhookEndpoints->create([

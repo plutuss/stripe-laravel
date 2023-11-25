@@ -7,10 +7,13 @@ use Plutuss\Stripe\Webhook\WebhookInterface;
 interface StripeWebhookContract
 {
 
+
     /**
+     * @param string|null $url
+     * @param array $paramsWebhook
      * @return WebhookInterface
      */
-    public function createWebhook(): WebhookInterface;
+    public function createWebhook(string $url = null, array $paramsWebhook = []): WebhookInterface;
 
     /**
      * @param string $webHookId
