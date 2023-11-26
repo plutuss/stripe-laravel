@@ -57,5 +57,7 @@ interface StripeContract
      * @return StripeChargeServiceInterface
      */
     public function charge(): StripeChargeServiceInterface;
+
+    public function webhook(): StripeWebhookContract;
 }
 

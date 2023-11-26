@@ -4,6 +4,7 @@ namespace Plutuss\Stripe\Webhook;
 
 use Plutuss\Stripe\Contracts\StripeWebhookContract;
 use Plutuss\Stripe\Traits\HasOptionAttributeTrait;
+use Stripe\Collection;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
@@ -37,10 +38,11 @@ class StripeWebhookService implements StripeWebhookContract
         }
 
         $params = array_merge($paramsWebhook, $this->params);
+        $url = $url ?? config('stripe-plutuss.stripe-webhook-secret');
 
         $webhook = $this->client
             ->webhookEndpoints->create([
-                'url' => $url ?? config('stripe-plutuss.stripe-webhook-secret'),
+                'url' => $url,
                 $params
             ]);
 
@@ -82,12 +84,13 @@ class StripeWebhookService implements StripeWebhookContract
         return new Webhook((array)$webhook);
     }
 
+
     /**
      * @param int $limit
-     * @return WebhookInterface
+     * @return Collection
      * @throws ApiErrorException
      */
-    public function listAllWebhook(int $limit = 3): WebhookInterface
+    public function listAllWebhook(int $limit = 3): \Stripe\Collection
     {
 
         $enabled_events = ['limit' => $limit];
@@ -97,7 +100,7 @@ class StripeWebhookService implements StripeWebhookContract
             $params
         );
 
-        return new Webhook((array)$webhook);
+        return $webhook;
     }
 
     /**

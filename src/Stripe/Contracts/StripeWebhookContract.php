@@ -3,6 +3,7 @@
 namespace Plutuss\Stripe\Contracts;
 
 use Plutuss\Stripe\Webhook\WebhookInterface;
+use Stripe\Collection;
 
 interface StripeWebhookContract
 {
@@ -28,11 +29,12 @@ interface StripeWebhookContract
      */
     public function updateWebhook(string $webHookId, string $url): WebhookInterface;
 
+
     /**
      * @param int $limit
-     * @return WebhookInterface
+     * @return Collection
      */
-    public function listAllWebhook(int $limit = 3): WebhookInterface;
+    public function listAllWebhook(int $limit = 3): \Stripe\Collection;
 
     /**
      * @param string $webHookId

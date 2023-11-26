@@ -97,6 +97,9 @@ class StripeService implements StripeContract
         return new StripeChargeService($this->client);
     }
 
+    /**
+     * @return StripeWebhookContract
+     */
     public function webhook(): StripeWebhookContract
     {
         return new StripeWebhookService($this->client);
