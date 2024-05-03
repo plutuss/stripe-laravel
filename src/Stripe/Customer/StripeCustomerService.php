@@ -25,17 +25,21 @@ class StripeCustomerService implements StripeCustomerContract
 
 
     /**
+     * @param string|null $email
+     * @param string|null $name
+     * @param string|null $description
      * @return CustomerInterface
      * @throws ApiErrorException
      */
-    public function createCustomer(): CustomerInterface
+    public function createCustomer(string $email = null, string $name = null, string $description = null): CustomerInterface
     {
         $params = array_merge([
-            'email' => $this->user->email,
-            'name' => $this->user->name,
-            'description' => config('app.name') . ' customer',
+            'email' => $email ?: $this->user->email,
+            'name' => $name ?: $this->user->name,
+            'description' => $description ?: config('app.name') . ' customer',
         ],
-            $this->params);
+            $this->params
+        );
 
         if (!empty($this->user->stripe_customer_id)) {
             $stripeCustomer = $this->checkStripeCustomer();
