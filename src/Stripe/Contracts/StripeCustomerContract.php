@@ -6,8 +6,18 @@ use Plutuss\Stripe\Customer\CustomerInterface;
 
 interface StripeCustomerContract
 {
-    public function createCustomer(): CustomerInterface;
+    /**
+     * @param string|null $email
+     * @param string|null $name
+     * @param string|null $description
+     * @return CustomerInterface
+     */
+    public function createCustomer(string $email = null, string $name = null, string $description = null): CustomerInterface;
 
 
+    /**
+     * @param array $params
+     * @return $this
+     */
     public function setOptionalParameters(array $params): static;
 }
